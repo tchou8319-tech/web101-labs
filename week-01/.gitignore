@@ -1,0 +1,5 @@
+node_modules/
+.vscode/
+.ipynb_checkpoints/
+*.log
+.DS_Store
