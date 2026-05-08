@@ -9,9 +9,9 @@ Learn how to build a website
 - Tags vs attribute; paired tags vs self-closing tags
 
 ## Files
-- ChocolateMilk.html
+- recipe.html
 
 ## How to run
-Open ChocolateMilk.html in your browser
+Open recipe.html in your browser
 ## Next week: 
 We will learn how to use semantic tags + accessibility + form
