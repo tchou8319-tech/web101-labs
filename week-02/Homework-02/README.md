@@ -10,12 +10,12 @@ Learn how to build a website
 - Tags vs attribute; paired tags vs self-closing tags
 #03
 Today we learned
-• Semantic HTML describes meaning; div soup doesn't
-• Forms need form, label, input, name, id — all working together
-• The right input type unlocks browser keyboards, pickers, and
+- Semantic HTML describes meaning; div soup doesn't
+- Forms need form, label, input, name, id — all working together
+- The right input type unlocks browser keyboards, pickers, and
 validation
-• Accessibility is the standard, not a feature
-• Lighthouse and axe DevTools tell you when you're done
+- Accessibility is the standard, not a feature
+- Lighthouse and axe DevTools tell you when you're done
 
 ## Files
 - Home.html
