@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Web Development</title>
+    <style>
+        /* ==========================================================================
+           1. GLOBAL STYLES & TYPOGRAPHY
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa; /* Light grey background for the whole page */
+            color: #333333;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #0d2c54; /* Dark navy blue color used for headings */
+            font-weight: 700;
+        }
+
+        /* ==========================================================================
+           2. HEADER & NAVIGATION STYLES
+           ========================================================================== */
+        header {
+            background-color: #1d3557; /* Darker navy background */
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between; /* Pushes logo to left, nav to right */
+            align-items: center;
+        }
+        .logo {
+            color: #ffffff;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px; /* Space between navigation items */
+        }
+        nav a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #ffffff; /* Subtle light up effect on hover */
+        }
+
+        /* ==========================================================================
+           3. HERO / WELCOME SECTION (Blue Gradient)
+           ========================================================================== */
+        .hero {
+            background: linear-gradient(135deg, #1d3557 0%, #457b9d 100%); /* Blue gradient background */
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .hero h1 {
+            color: #ffffff; /* Keeps h1 white inside the hero banner */
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto; /* Centers text block and adds bottom spacing */
+            color: #f1faee;
+        }
+        /* The vibrant green button */
+        .btn-get-started {
+            display: inline-block;
+            background-color: #39ff14; /* Bright neon green */
+            color: #000000;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 5px; /* Smooth rounded corners */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+        }
+        .btn-get-started:hover {
+            transform: scale(1.03); /* Tiny pop-out effect when hovering */
+        }
+
+        /* ==========================================================================
+           4. MAIN CONTENT CONTAINER & SECTIONS
+           ========================================================================== */
+        .container {
+            max-width: 1000px; /* Limits maximum width on desktop */
+            margin: 0 auto;    /* Centers everything inside the screen width */
+            padding: 40px 20px;
+        }
+        section {
+            margin-bottom: 5px;
+            padding: 25px 0;
+        }
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+
+        /* ==========================================================================
+           5. CARDS GRID (What You'll Learn)
+           ========================================================================== */
+        .cards-grid {
+            display: flex;
+            flex-direction: row; /* Default layout: Side-by-side cards for desktop */
+            gap: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #eef0f2;
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            flex: 1; /* Forces all cards to take up equal width */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Subtle, elegant shadow */
+        }
+        .card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .card p {
+            color: #555555;
+            font-size: 0.95rem;
+        }
+
+        /* ==========================================================================
+           6. FORM STYLES (Contact Section)
+           ========================================================================== */
+        .form-group {
+            margin-bottom: 15px;
+            max-width: 500px; /* Limits input boxes form getting too wide on desktop */
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #0d2c54;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%; /* Makes inputs responsive to container width */
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        /* Green form submit button */
+        .btn-submit {
+            background-color: #39ff14;
+            color: #000000;
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* ==========================================================================
+           7. FOOTER STYLES
+           ========================================================================== */
+        footer {
+            background-color: #1d3557;
+            color: #ffffff;
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 0.85rem;
+            margin-top: 40px;
+        }
+
+        /* ==========================================================================
+           8. RESPONSIVE DESIGN (Media Queries for Mobile Layout)
+           ========================================================================== */
+        /* Whenever the screen width is 768px or smaller (like mobile phones) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column; /* Stacks logo vertically above navigation items */
+                gap: 15px;
+                text-align: center;
+            }
+            .cards-grid {
+                flex-direction: column; /* Flips the cards from horizontal row to a vertical stack */
+                gap: 25px;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">MySite</a>
+        <nav>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Welcome to Web Development</h1>
+        <p>Learn HTML, CSS, JavaScript &mdash; and build real websites you're proud of.</p>
+        <a href="#" class="btn-get-started">Get Started</a>
+    </div>
+
+    <div class="container">
+
+        <section>
+            <h2>What You'll Learn</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="icon">📄</span>
+                    <h3>HTML</h3>
+                    <p>Structure the content of your web pages with semantic tags.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🎨</span>
+                    <h3>CSS</h3>
+                    <p>Style your pages with colors, fonts, and beautiful layouts.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">⚡</span>
+                    <h3>JavaScript</h3>
+                    <p>Make your pages interactive and respond to user actions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>About This Course</h2>
+            <p style="margin-bottom: 15px;">Web and Cloud Technology I covers the foundations of modern web development. By the end of the semester you will have built and deployed a complete website.</p>
+            <p>We focus on <strong>practical skills</strong> &mdash; every week you write real code and ship a working project.</p>
+        </section>
+
+        <section>
+            <h2>Contact Me</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">Your name</label>
+                    <input type="text" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Sao Kimsong &middot; Web and Cloud Technology I</p>
+    </footer>
+
+</body>
+</html>
