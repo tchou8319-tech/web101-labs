@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Checker</title>
+</head>
+<body>
+    <!--Style-->
+    <style>
+    
+    .card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            height: 150px;
+            padding: 35px 25px;
+            text-align:center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+    };
+
+    .box {
+        border-radius: 50%;
+    }
+
+    body {
+        background-color: azure;
+        display: flex;
+        justify-content: center;
+    }
+
+    .card-title{
+        font-size: 18px;
+        color: #000000;
+        margin-top: 15px;
+    }
+
+    .checker-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 25px
+    };
+
+    #scoreInput:focus {
+        width: 140px;
+        height: 46px;
+        border: 1.5px solid #a0a0a0;
+        border-radius: 6px;
+        padding: 0 12px;
+        font-size: 1.25rem;
+        color: #1a1a1a;
+        outline: none;
+    }
+
+    .check-btn  {
+        background-color: #1c3d70;
+        color: #ffffff;
+        height: 45px;
+        padding:  0 24px;
+        font-size: 1rem;
+        font-weight: 500 ;
+        cursor: pointer;
+        transition:background 0.15s ease;
+    }
+
+    .check-btn:hover {
+        background-color: #122b53;
+    }
+
+    .check-btn:active {
+        transform: scale(0.98);
+    }
+
+    .result-text {
+        font-size: 1rem;
+        font-weight: 700;
+        min-height: 40px;
+    }
+
+    .text-excellent {
+        color: #137333; /* Dark Green */
+    }
+
+    .text-average {
+         color: #e67e22; /* Vibrant Orange for Grade C/B */
+    }
+
+    .text-fail {
+        color: #c5221f; /* Crimson Red */
+    }
+
+    
+    </style>
+
+    <!--Html-->
+    <div class="card">
+        <!--Title-->
+        <h1 class="card-title"> Grade Checker</h1>
+        <!--Input-->
+        <div class="checker-container">
+            <input type="number" id="scoreInput" min="0" max="100" value="50">
+            <button id="checkBtn" class="check-btn">Check</button>
+        </div>
+
+        <!--Output-->
+        <p id="resultText" class="result-text">Score: 50 - Grade C</p>
+    </div>
+
+    <script>
+        const ScoreInput = document.getElementById('scoreInput');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultText = document.getElementById('resultText');
+
+        function checkGrade() {
+            const scoreVal = scoreInput.value.trim();
+            const score = parseFloat(scoreVal);
+
+        if (scoreVal === "" || isNaN(score) || score < 0 || score > 100) {
+                resultText.textContent = "Please enter a score between 0 and 100";
+                resultText.className = "result-text text-fail";
+                return;
+            }
+
+            let grade = "";
+            let textClass = "";
+
+            // Official Grading System calculations
+            if (score >= 85) {
+                grade = "A";
+                textClass = "text-excellent";
+            } else if (score >= 80) {
+                grade = "B+";
+                textClass = "text-excellent";
+            } else if (score >= 70) {
+                grade = "B";
+                textClass = "text-average";
+            } else if (score >= 65) {
+                grade = "C+";
+                textClass = "text-average";
+            } else if (score >= 50) {
+                grade = "C";
+                textClass = "text-average"; // Matches the orange state
+            } else if (score >= 45) {
+                grade = "D";
+                textClass = "text-fail";
+            } else {
+                grade = "F";
+                textClass = "text-fail";
+            }
+
+            // Output rendering logic
+            resultText.textContent = `Score: ${score} - Grade ${grade}`;
+            resultText.className = `result-text ${textClass}`;
+        }
+
+        // Action binding assignments
+        checkBtn.addEventListener('click', checkGrade);
+        scoreInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkGrade();
+            }
+        });
+
+        // Generate baseline state on load 
+        checkGrade();   
+        
+    </script>
+    
+</body>
+</html>
