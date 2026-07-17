@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Scores Tracker</title>
+    <style>
+        /* Base page layout */
+        body {
+            background-color: #f0f4f8;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Centered card component */
+        .score-card {
+            background-color: white;
+            width: 360px;
+            padding: 40px;
+            margin: 80px auto;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        h1 {
+            color: #111111;
+            margin-bottom: 20px;
+        }
+
+        /* List of student scores */
+        #scoresList {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Color classes for different grades */
+        .score-excellent { color: #137333; }
+        .score-passing { color: #e67e22; }
+        .score-failing { color: #c5221f; }
+
+        /* Statistics summary block */
+        .stats-box {
+            color: #1c3d70;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        /* Input field and button setup */
+        .input-group {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        #scoreInput {
+            width: 110px;
+            height: 36px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            padding-left: 8px;
+            font-size: 14px;
+        }
+
+        #addBtn {
+            background-color: #1c3d70;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #addBtn:hover {
+            background-color: #122b54;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="score-card">
+        <h1>Student Scores</h1>
+        
+        <!-- Area where scores are listed -->
+        <div id="scoresList"></div>
+        
+        <!-- Summary stats -->
+        <div id="statsDisplay" class="stats-box"></div>
+        
+        <!-- Controls area -->
+        <div class="input-group">
+            <input type="number" id="scoreInput" placeholder="New score">
+            <button id="addBtn">Add score</button>
+        </div>
+    </div>
+
+    <script>
+        // Default starting data
+        let scores = [45, 82, 91, 60, 77, 33, 50];
+
+        // Fetching HTML elements
+        const scoreInput = document.getElementById('scoreInput');
+        const addBtn = document.getElementById('addBtn');
+        const scoresList = document.getElementById('scoresList');
+        const statsDisplay = document.getElementById('statsDisplay');
+
+        // Function to update the page values
+        function updateScoresUI() {
+            // Clear out the previous list items
+            scoresList.innerHTML = "";
+
+            let highest = scores[0];
+            let lowest = scores[0];
+            let total = 0;
+
+            // Loop through scores array to print values and find statistics
+            for (let i = 0; i < scores.length; i++) {
+                let current = scores[i];
+                total += current;
+
+                // Track highest and lowest
+                if (current > highest) highest = current;
+                if (current < lowest) lowest = current;
+
+                // Pick the right class name depending on the score tier
+                let scoreClass = "";
+                if (current >= 85) {
+                    scoreClass = "score-excellent";
+                } else if (current >= 50) {
+                    scoreClass = "score-passing";
+                } else {
+                    scoreClass = "score-failing";
+                }
+
+                // Append the score element to the page container
+                scoresList.innerHTML += `<div class="${scoreClass}">${current}</div>`;
+            }
+
+            // Compute the average mathematical score
+            let average = total / scores.length;
+            let formattedAverage = average.toFixed(1);
+
+            // Print string output values to the page layout view
+            statsDisplay.innerHTML = `Highest: ${highest} | Lowest: ${lowest} | Average: ${formattedAverage}`;
+        }
+
+        // Function to manage pushing a new score to our data list
+        function handleAddScore() {
+            let rawValue = scoreInput.value.trim();
+            let numValue = parseFloat(rawValue);
+
+            // Basic input field data validation check
+            if (rawValue === "" || isNaN(numValue) || numValue < 0 || numValue > 100) {
+                alert("Please enter a score between 0 and 100");
+                scoreInput.value = "";
+                return;
+            }
+
+            // Save inside database array collection
+            scores.push(numValue);
+            
+            // Clear old values out of the text entry box
+            scoreInput.value = "";
+
+            // Re-render everything with the fresh values
+            updateScoresUI();
+        }
+
+        // Hook up user click and key actions
+        addBtn.addEventListener('click', handleAddScore);
+        
+        scoreInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleAddScore();
+            }
+        });
+
+        // Initialize display content state on load
+        updateScoresUI();
+    </script>
+
+</body>
+</html>
