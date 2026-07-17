@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+
+    <!---CSS--->
+    <style>
+        .profile-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 360px;
+            padding: 35px 25px;
+            text-align:center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+         body {
+            background-color: #c0defd;
+            display: flex;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background-color: #0056b3;
+            display: flex;
+            border-radius: 50%;
+            object-fit: cover;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+        };
+
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .title {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .toggle-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 15px;
+            box-shadow: #ddd 0px 5px 15px;
+
+        }
+
+        .toggle-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .bio {
+            display: none;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .bio.show {
+            display: block;
+        }
+
+        .bio.hidden {
+            display: none;
+        }
+
+    </style>
+
+    <!---HTML--->
+    <div class="profile-card">
+        <div img src="" alt="louis" class="avatar">
+            
+            <i class="bi bi-image"></i>
+        </div>
+        <h2 class="name">Chan Thyda</h2>
+        <p class="title">Information Technology Engineering</p>
+
+        <button class="toggle-btn" onclick="toggleBio()">Show More</button>
+        <p class="bio hidden" id="bio-text">I am a second year student. I love technology.</p>
+    </div>
+
+    <!---JS--->
+    <script>
+        const toggleBtn = document.getElementById('toggle-btn');
+        const bio = document.getElementById('bio-text');
+
+        function toggleBio() {
+            const isHidden = bio.classList.contains('hidden');
+
+            if (isHidden) {
+                //show the bio
+                bio.classList.remove('hidden');
+                bio.classList.add('show');
+            } else {
+                //hide the bio
+                bio.classList.remove('show');
+                bio.classList.add('hidden');
+            }
+        }
+        
+    </script>
+
+    
+</body>
+</html>
