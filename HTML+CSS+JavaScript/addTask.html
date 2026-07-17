@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Tasks App</title>
+    <style>
+        /* Base page layout alignment */
+        body {
+            background-color: #f0f4f8;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Centered application card */
+        .task-card {
+            background-color: white;
+            width: 380px;
+            padding: 40px;
+            margin: 80px auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Title style matching your screenshot color */
+        h1 {
+            color: #1c3d70;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        /* Input and Button Row area */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        #taskInput {
+            flex: 1;
+            height: 38px;
+            border: 1px solid #a0a0a0;
+            border-radius: 4px;
+            padding-left: 12px;
+            font-size: 15px;
+        }
+
+        #addBtn {
+            background-color: #1c3d70;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 20px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #addBtn:hover {
+            background-color: #122b54;
+        }
+
+        /* Task container area layout */
+        #taskList {
+            margin-bottom: 25px;
+        }
+
+        /* Individual task bar row styling */
+        .task-item {
+            background-color: #d1e0f0; /* Light blue background color */
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        /* Line through style state when task is checked completed */
+        .task-item.completed span {
+            text-decoration: line-through;
+            color: #666666;
+        }
+
+        /* Red delete button 'x' marker */
+        .delete-btn {
+            color: red;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        /* Tasks summary counter tracker */
+        .task-counter {
+            text-align: center;
+            color: #1c3d70;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="task-card">
+        <h1>My Tasks</h1>
+
+        <!-- Input and Submit Controls Area -->
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="New task...">
+            <button id="addBtn">Add</button>
+        </div>
+
+        <!-- Task List Area -->
+        <div id="taskList"></div>
+
+        <!-- Summary Counter Line -->
+        <div id="counterDisplay" class="task-counter"></div>
+    </div>
+
+    <script>
+        // Default starting data collection to match your image exactly
+        let tasks = [
+            { text: "Homework 1", done: false }
+        ];
+
+        // Fetch HTML elements
+        const taskInput = document.getElementById('taskInput');
+        const addBtn = document.getElementById('addBtn');
+        const taskList = document.getElementById('taskList');
+        const counterDisplay = document.getElementById('counterDisplay');
+
+        // Function to build and update the UI list view elements
+        function renderTasksUI() {
+            taskList.innerHTML = "";
+            let doneCount = 0;
+
+            // Loop over data items array tracking index positions
+            for (let i = 0; i < tasks.length; i++) {
+                let currentTask = tasks[i];
+
+                // Create the row div
+                let taskDiv = document.createElement('div');
+                taskDiv.className = "task-item";
+                
+                // If the task is marked done, add the finished styling
+                if (currentTask.done) {
+                    taskDiv.classList.add('completed');
+                    doneCount++;
+                }
+
+                // Inject internal layout template structure safely
+                taskDiv.innerHTML = `
+                    <span>${currentTask.text}</span>
+                    <span class="delete-btn">&times;</span>
+                `;
+
+                // Event listener 1: Toggle complete status when clicking the text row area
+                taskDiv.addEventListener('click', function(event) {
+                    // Make sure we didn't just click the delete button
+                    if (!event.target.classList.contains('delete-btn')) {
+                        currentTask.done = !currentTask.done;
+                        renderTasksUI();
+                    }
+                });
+
+                // Event listener 2: Delete element item when clicking on the red cross marker
+                let deleteSpan = taskDiv.querySelector('.delete-btn');
+                deleteSpan.addEventListener('click', function() {
+                    tasks.splice(i, 1); // Remove item from data array tracking index position
+                    renderTasksUI();
+                });
+
+                // Append newly made row container onto page view area
+                taskList.appendChild(taskDiv);
+            }
+
+            // Update bottom status string message counters
+            counterDisplay.textContent = `${doneCount} of ${tasks.length} tasks done`;
+        }
+
+        // Function to handle reading values and adding new items
+        function handleAddTask() {
+            let textValue = taskInput.value.trim();
+
+            // Prevent blank row entry additions
+            if (textValue === "") {
+                return;
+            }
+
+            // Create object and push into data container array
+            tasks.push({
+                text: textValue,
+                done: false
+            });
+
+            // Clear text entry out of control area box
+            taskInput.value = "";
+
+            // Re-render interface states right away
+            renderTasksUI();
+        }
+
+        // Connect action handler execution hooks
+        addBtn.addEventListener('click', handleAddTask);
+        
+        taskInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleAddTask();
+            }
+        });
+
+        // Initialize display list layout properties during initial application load
+        renderTasksUI();
+    </script>
+
+</body>
+</html>
