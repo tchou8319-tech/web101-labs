@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Table Generator</title>
+</head>
+<body>
+
+    <!--CSS-->
+    <style>
+        body {
+            background-color:aliceblue;
+            text-align: center;
+            font-family: sans-serif;
+            padding-top: 50px;
+        }
+
+        h1 {
+            color:black;
+            margin-bottom: 20px;
+        }
+
+        #numberInput {
+            width: 70px;
+            height:auto;
+            font-size: 18px;
+            padding-left: 5px;
+        }
+
+        #generateBtn {
+            background-color: #0a1536;
+            color: white;
+            height: 39px;
+            padding: 0 15px;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        table {
+            margin:30px auto;
+            border-collapse: collapse;
+            width: 300px;
+            background-color: white;
+        }
+
+        th {
+            background: color #1c3d70;
+            color:rgb(0, 0, 0);
+            padding: 10px;
+            border:1px solid #b8c7db;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #b8c7db;
+            font-size:20px;
+        }
+    </style>
+    <!--html-->
+    <h1> MUltiplication Table</h1>
+    <input type="number" id="numberInput" value="3">
+    <button id="generateBtn">Genterate</button>
+
+    <table>
+        <thead>
+            <!-- Header Column Labels -->
+            <tr>
+                <th>Expression</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <!--JavaScript-->
+    <script>
+        // 
+        const numberInput = document.getElementById('numberInput');
+        const generateBtn = document.getElementById('generateBtn');
+        const tableBody = document.getElementById('tableBody');
+
+        // 
+        function makeTable() {
+            
+            const num = parseInt(numberInput.value);
+
+            tableBody.innerHTML = "";
+
+            // Loop 9 times total to create numbers 1 through 9
+            for (let i = 1; i <= 9; i++) {
+                // Calculate the multiplication formula result
+                const result = num * i;
+
+                // Build a standard HTML row structure snippet text string
+                const row = "<tr>" +
+                                "<td>" + num + " x " + i + "</td>" +
+                                "<td>" + result + "</td>" +
+                            "</tr>";
+                tableBody.innerHTML += row;
+            }
+        }
+
+        // 
+        generateBtn.addEventListener('click', makeTable);
+
+        // 
+        makeTable();
+    </script>
+
+</body>
+</html>
