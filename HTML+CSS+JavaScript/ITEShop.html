@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITE Shop</title>
+<!--Bootdtrap CSS CDN Link-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<!--Header Part-->
+<nav class="navbar navbar-dark bg-dark px-3 shadow-sm">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1 fs-5">ITE Shop</span>
+        <span class="text-white font-weight-bold">Cart
+            <span id="navCartCount" class="badge bg-warning text-dark ms-1 fs-6">0</span>
+        </span>
+    </div>
+</nav>
+
+<!-------------------->
+<main class="container my-4">
+    <div class="row g-4">
+
+        <!---------------->
+        <section class="col-lg-8">
+            <div class="row g-3" id="productsContainer"></div>
+        </section>
+        <!----------------->
+        <section class="col-lg-4">
+            <div class="card shadow-sm border-secondary-subtle">
+                <!------Cart Title------->
+                <div class="card-header bg-primary text-white font-weight-bold py-2 fs-5">Your Cart</div>
+
+                <div id="cartItemsList" class="list-group list-group-flush"></div>
+
+                <div class="card-footer bg-light fw-bold fs-5 py-3 border-top border-secondary-subtitle text-dark"
+                     id="cartTotalDisplay"> Total: $0.00</div>
+            </div>
+        </section>
+    </div>
+</main>
+<!--JavaScript-->
+<script>
+    //1.Items list
+    const products = [
+        { id: "p1", name: "Keyboard", price: 25.50},
+        { id: "p2", name: "Mouse", price: 12.00},
+        { id: "p3", name: "Monitor", price: 149.99},
+        { id: "p4", name: "USB Hub", price: 18.75}
+    ];
+
+    const cart = [];
+
+    
+    //Fetch HTML elements using simple id
+    const productsContainer = document.getElementById("productsContainer");
+    const cartItemsList = document.getElementById("cartItemsList");
+    const navCartCount = document.getElementById("navCartCount");
+    const cartTotalDisplay = document.getElementById("cartTotalDisplay");
+
+    //Draw the products grid
+    function drawProducts() {
+        productsContainer.innerHTML = "";
+        //Loop to create the product layout cards
+        for(let i = 0; i < products.length; i++) {
+            let p = products[i];
+
+            productsContainer.innerHTML += `
+                    <div class="col-sm-6">
+                        <div class="card h-100 shadow-sm border-secondary-subtle">
+                            <div class="card-body d-flex flex-column justify-content-between p-3">
+                                <div>
+                                    <h5 class="card-title text-dark fw-bold mb-1 fs-5">${p.name}</h5>
+                                    <p class="card-text text-secondary fw-semibold mb-3 fs-6">$${p.price.toFixed(2)}</p>
+                                </div>
+                                <button class="btn btn-primary btn-sm align-self-start px-3" onclick="addToCart(${i})">Add to cart</button>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+    }
+
+    //4. Funtion to draw the cart list and do the math
+    function drawCart() {
+
+        cartItemsList.innerHTML = "";
+
+        let grandTotal = 0;
+        let totalItems = 0;
+
+        for(let i = 0; i < cart.length; i++) {
+            let item = cart[i];
+            let itemTotal = item.price * item.quantity;
+            
+            grandTotal += itemTotal;
+            totalItems += item.quantity;
+
+            cartItemsList.innerHTML += `
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 border-bottom border-light-subtle fs-6">
+                        <span class="text-dark">${item.name} x ${item.quantity}</span>
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="fw-bold text-dark">$${itemTotal.toFixed(2)}</span>
+                            <button class="btn btn-outline-secondary btn-sm fw-bold px-2 py-0 lh-1" onclick="removeOne(${i})">-</button>
+                        </div>
+                    </div>`;
+        }
+
+        navCartCount.textContent = totalItems;
+        cartTotalDisplay.textContent = "Total: $" + grandTotal.toFixed(2);
+    }
+
+    //
+    function addToCart(productIndex) {
+        let selectedProduct = products[productIndex];
+        let foundIndex = -1;
+
+        for(let i = 0; i < cart.length; i++) {
+
+            if (cart[i].id ===selectedProduct.id) {
+                foundIndex = i;
+                break;
+            }
+        }
+
+        if (foundIndex > -1) {
+            cart[foundIndex].quantity++;
+        } else {
+            cart.push({
+                id: selectedProduct.id,
+                name: selectedProduct.name,
+                price: selectedProduct.price,
+                quantity: 1
+            });
+        }
+        drawCart();
+    }
+
+    //
+    function removeOne(cartIndex) {
+
+        if(cart[cartIndex].quantity > 1) {
+            cart[cartIndex].quantity--;
+        } else {
+            cart.splice(cartIndex, 1);
+        }
+
+        drawCart();
+    }
+
+    //
+    drawProducts();
+    drawCart();
+</script>
+
+<!--Bootstrap JavaScript Bundle-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    
+    
+</body>
+</html>
